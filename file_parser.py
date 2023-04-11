@@ -72,16 +72,16 @@ def scan(folder: Path) -> None:
 
         ext = get_extension(item.name)  # розширення файлу
         fullname = folder / item.name  # повний шлях до файлу
-        if not ext:  # якщо файл не має розширення кладемо його в папку азерс
-            OTHERS.append(fullname)
-        else:
-            try:
-                container = REGISTER_EXTENSIONS[ext]
+        if ext:
+            container = REGISTER_EXTENSION.get(ext)
+            if container is not None:
                 EXTENSIONS.add(ext)
-                container.append(fullname)
-            except KeyError:
+                container.append(full_name)
+             else:
                 UNKNOWN.add(ext)
-                OTHERS.append(fullname)
+                MY_OTHER.append(full_name)
+        else:
+            MY_OTHER.append(full_name)
 
 
 if __name__ == '__main__':
